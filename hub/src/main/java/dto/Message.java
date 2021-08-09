@@ -1,36 +1,45 @@
 package dto;
 
-public class Message {
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
-    private int messageId;
+
+public class Message {
+    @NotNull(message = "Message Id is mandatory")
+    private String messageId;
+    @NotNull(message = "SenderId is mandatory")
     private String senderId;
+    @NotNull(message = "MDN is mandatory")
     private String MDN;
+    @NotNull(message = "Message Body is mandatory")
     private String body;
 
+    public Date getAcceptedTime() {
+        return acceptedTime;
+    }
+
+    public void setAcceptedTime(Date acceptedTime) {
+        this.acceptedTime = acceptedTime;
+    }
+
+    private Date  acceptedTime;
 
 
-    public Message(int messageId, String senderId, String MDN, String body) {
+
+
+    public Message(String messageId, String senderId, String MDN, String body) {
         this.messageId = messageId;
         this.senderId = senderId;
         this.MDN = MDN;
         this.body = body;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "messageId=" + messageId +
-                ", senderId='" + senderId + '\'' +
-                ", MDN='" + MDN + '\'' +
-                ", body='" + body + '\'' +
-                '}';
-    }
 
-    public int getMessageId() {
+    public String getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(int messageId) {
+    public void setMessageId(String messageId) {
         this.messageId = messageId;
     }
 
@@ -56,5 +65,16 @@ public class Message {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "messageId=" + messageId +
+                ", senderId='" + senderId + '\'' +
+                ", MDN='" + MDN + '\'' +
+                ", body='" + body + '\'' +
+                ", acceptedTime=" + acceptedTime +
+                '}';
     }
 }
