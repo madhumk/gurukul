@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64.exe convert -f docker-compose.yaml -o test
+      --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: hubapi
+  name: hubapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: hubapi
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose-windows-amd64.exe convert -f docker-compose.yaml -o test
+          --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: hubapi
+    spec:
+      containers:
+      - env:
+        - name: KAFKA_BOOT_STRAP_SERVER
+          value: source-kafka-bootstrap:9092
+        image: njoshi/hubapi
+        imagePullPolicy: ""
+        name: hubapi
+        ports:
+        - containerPort: 9001
+        resources: {}
+      hostname: hubapi
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

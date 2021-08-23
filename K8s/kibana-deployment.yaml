@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64.exe convert -f docker-compose.yaml -o test
+      --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: kibana
+  name: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: kibana
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose-windows-amd64.exe convert -f docker-compose.yaml -o test
+          --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: kibana
+    spec:
+      containers:
+      - image: docker.elastic.co/kibana/kibana:7.13.2
+        imagePullPolicy: ""
+        name: kibana
+        ports:
+        - containerPort: 5601
+        resources: {}
+        volumeMounts:
+        - mountPath: /usr/share/kibana/config/
+          name: config-file
+      hostname: kibana
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+        - name: config-file
+          configMap:
+            name: gurukul-kibana-config
+            items:
+              - key: kibana.yml
+                path: kibana.yml
+status: {}
