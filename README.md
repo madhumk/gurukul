@@ -61,7 +61,7 @@ kafka-console-consumer --bootstrap-server localhost:9092 --topic message_count -
  
   http://localhost:5601/
   
-  ##K8s
+##K8s
   
   all files available in K8s folder
   
