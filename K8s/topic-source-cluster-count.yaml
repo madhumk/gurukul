@@ -1,0 +1,10 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: source-topics-count
+  labels:
+    strimzi.io/cluster: source
+spec:
+  topicName: message_count
+  partitions: 1
+  replicas: 1

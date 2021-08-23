@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose-windows-amd64.exe convert -f docker-compose.yaml -o test
+      --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: streamjob
+  name: streamjob
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: streamjob
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose-windows-amd64.exe convert -f docker-compose.yaml -o test
+          --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: streamjob
+    spec:
+      containers:
+      - args:
+        - bash
+        - -c
+        - cub kafka-ready -z source-zookeeper-client:2181 1 240 && cub kafka-ready -z destination-zookeeper-client:2181
+          1 240
+        image: njoshi/streamjob
+        imagePullPolicy: ""
+        name: streamjob
+        resources: {}
+      hostname: streamjob
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
